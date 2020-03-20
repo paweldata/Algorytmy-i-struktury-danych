@@ -8,10 +8,10 @@
 - DualQuickSort
 - Hybryda insertsort i quickSort
 
-#### Parametry:
---type insert | quick | merge | dualQuick | hybrid
---comp <= | >=
---stat 'filename' 'number_of_tests' (optional)
+#### Parametry
+- --type insert | quick | merge | dualQuick | hybrid
+- --comp <= | >=
+- --stat 'filename' 'number_of_tests' (optional)
 
 #### Przykład
 
