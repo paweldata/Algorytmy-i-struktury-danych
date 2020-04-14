@@ -12,3 +12,11 @@ Rozwiązania zadań z kursu Algorytmy i struktury danych na kierunku informatyka
 - QuickSort
 - DualQuickSort
 - Hybryda insertsort i quickSort
+
+### Lista 3
+- RadixSort
+- Randomized select
+- Select
+- Binary search
+- Ulepszony QuickSort
+- Ulepszony DualQuickSort
