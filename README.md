@@ -20,3 +20,9 @@ Rozwiązania zadań z kursu Algorytmy i struktury danych na kierunku informatyka
 - Binary search
 - Ulepszony QuickSort
 - Ulepszony DualQuickSort
+
+### Lista 4
+- Binary search tree
+- Red-black tree
+- Hashmap
+- Bloom filter
