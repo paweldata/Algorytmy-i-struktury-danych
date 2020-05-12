@@ -19,7 +19,7 @@ Program symuluje działanie 4 struktur danych przechowujących ciągi znaków:
 - inorder
 
 #### Parametry
-- --type bst | rbt | hmap | bloom
+- --type bst | rbt | hmap | bloom  
 bst - drzewo binarne  
 rbt - drzewo czerowno czarne  
 hmap - mapa haszująca  
