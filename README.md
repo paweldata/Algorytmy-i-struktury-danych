@@ -26,3 +26,11 @@ Rozwiązania zadań z kursu Algorytmy i struktury danych na kierunku informatyka
 - Red-black tree
 - Hashmap
 - Bloom filter
+
+### Lista 5
+- Priority queue
+- Binary heap
+- algortym Dijkstry
+- Minimum spanning tree (MST)
+	- Prim
+	- Kruskal
