@@ -28,6 +28,7 @@ void GraphTravel::getEdgesFromStdin() {
 }
 
 void GraphTravel::randomTravel() {
+    clock_t start = clock();
     std::random_device rd;
     std::mt19937 generator(rd());
     std::uniform_int_distribution<int> randInt(0, this->edgesAmount - 1);
@@ -36,6 +37,7 @@ void GraphTravel::randomTravel() {
     int currNodesAmount = 0;
     int currNodeIndex = 1;
     int counter = 0;
+    double sum = 0;
 
     while (currNodesAmount < this->nodesAmount) {
         if (!this->nodeIfVisited[currNodeIndex]) {
@@ -44,22 +46,27 @@ void GraphTravel::randomTravel() {
         }
 
         int size = this->nodes[currNodeIndex]->edgeList.size();
-        currNodeIndex = this->nodes[currNodeIndex]->edgeList[randInt(generator) % size]->node2->index;
+        int randomIndex = randInt(generator) % size;
+        sum += this->nodes[currNodeIndex]->edgeList[randomIndex]->value;
+        currNodeIndex = this->nodes[currNodeIndex]->edgeList[randomIndex]->node2->index;
         counter++;
     }
 
-    for (auto && i : this->nodeIfVisited)
-        printf(i ? "true " : "false ");
-    printf("\n");
-    printf("counter : %d\n", counter);
+    clock_t stop = clock();
+    printf("Random:\n");
+    printf("\tMoves = %d\n", counter);
+    printf("\tSum = %f\n", sum);
+    printf("\tTime : %f milliseconds\n", (double)(stop-start) / CLOCKS_PER_SEC * 1000);
 }
 
 void GraphTravel::minEdgeTravel() {
+    clock_t start = clock();
     this->nodeIfVisited = std::vector<bool>(nodesAmount + 1, false);
 
     int currNodeIndex = 1;
     int currNodesAmount = 1;
     int counter = 0;
+    double sum = 0;
     this->nodeIfVisited[currNodeIndex] = true;
 
     while (currNodesAmount < this->nodesAmount) {
@@ -74,18 +81,20 @@ void GraphTravel::minEdgeTravel() {
         this->nodeIfVisited[currNodeIndex] = true;
         currNodesAmount++;
         counter++;
+        sum += bestEdge->value;
     }
 
-    for (auto && i : this->nodeIfVisited)
-        printf(i ? "true " : "false ");
-    printf("\n");
-    printf("counter : %d\n", counter);
+    clock_t stop = clock();
+    printf("Min edge:\n");
+    printf("\tMoves = %d\n", counter);
+    printf("\tSum = %f\n", sum);
+    printf("\tTime : %f milliseconds\n", (double)(stop-start) / CLOCKS_PER_SEC * 1000);
 }
 
-void GraphTravel::mstEulerTravel() { //TODO
+void GraphTravel::mstEulerTravel() {
+    clock_t start = clock();
     this->nodeIfVisited = std::vector<bool>(nodesAmount + 1, false);
     std::map<Edge*, int> edgesVisitAmount;
-    //std::map<std::pair<int, int>, int> edgesVisitAmount;
 
     GraphMST graph(this->nodesAmount);
     graph.setNodes(this->nodes, this->edgesAmount);
@@ -109,7 +118,8 @@ void GraphTravel::mstEulerTravel() { //TODO
     int currNodesAmount = 0;
     int currNodeIndex = 1;
     int counter = 0;
-    
+    double sum = 0;
+
     while (currNodesAmount < this->nodesAmount) {
         if (!this->nodeIfVisited[currNodeIndex]) {
             this->nodeIfVisited[currNodeIndex] = true;
@@ -122,6 +132,7 @@ void GraphTravel::mstEulerTravel() { //TODO
             if (edgesVisitAmount[this->nodes[currNodeIndex]->edgeList[i]] == 0
             && this->nodeIfVisited[this->nodes[currNodeIndex]->edgeList[i]->node2->index] == false) {
                 edgesVisitAmount[this->nodes[currNodeIndex]->edgeList[i]]++;
+                sum += this->nodes[currNodeIndex]->edgeList[i]->value;
                 currNodeIndex = this->nodes[currNodeIndex]->edgeList[i]->node2->index;
                 break;
             }
@@ -129,10 +140,11 @@ void GraphTravel::mstEulerTravel() { //TODO
         }
 
         if (i == size) {
-            int i = 0;
+            i = 0;
             while (i < size) {
                 if (edgesVisitAmount[this->nodes[currNodeIndex]->edgeList[i]] == 0) {
                     edgesVisitAmount[this->nodes[currNodeIndex]->edgeList[i]]++;
+                    sum += this->nodes[currNodeIndex]->edgeList[i]->value;
                     currNodeIndex = this->nodes[currNodeIndex]->edgeList[i]->node2->index;
                     break;
                 }
@@ -141,23 +153,11 @@ void GraphTravel::mstEulerTravel() { //TODO
         }
 
         counter++;
-
-        /*if (i == size) {
-            printf("Lipa\n");
-            Edge* minEdge = this->nodes[currNodeIndex]->edgeList[0];
-
-            for (Edge* edge : this->nodes[currNodeIndex]->edgeList) {
-                if (edgesVisitAmount[edge] < edgesVisitAmount[minEdge])
-                    minEdge = edge;
-            }
-
-            currNodeIndex = minEdge->node2->index;
-            edgesVisitAmount[minEdge]++;
-        }*/
     }
 
-    for (auto && i : this->nodeIfVisited)
-        printf(i ? "true " : "false ");
-    printf("\n");
-    printf("counter : %d\n", counter);
+    clock_t stop = clock();
+    printf("MST graph:\n");
+    printf("\tMoves = %d\n", counter);
+    printf("\tSum = %f\n", sum);
+    printf("\tTime : %f milliseconds\n", (double)(stop-start) / CLOCKS_PER_SEC * 1000);
 }

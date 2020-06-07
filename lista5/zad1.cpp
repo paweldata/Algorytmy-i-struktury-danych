@@ -23,7 +23,7 @@ int main() {
             printf("%d\n", queue.empty());
         } else if (command == "top") {
             try {
-                queue.top();
+                printf("%d\n", queue.top());
             } catch (std::out_of_range&) {
                 printf("\n");
             }
